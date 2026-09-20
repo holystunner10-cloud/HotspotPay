@@ -21,10 +21,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Gradle
+      - name: Set up Gradle 8.7
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.7
+          gradle-version: '8.7'
 
       - name: Prepare project sources
         run: |
@@ -46,12 +46,21 @@ jobs:
           PROJECT_DIR=$(dirname "$SETTINGS_FILE")
           echo "Found Android project at: $PROJECT_DIR"
           cd "$PROJECT_DIR"
-          if [ -f "./gradlew" ]; then
-            chmod +x ./gradlew
-            ./gradlew assembleDebug --stacktrace
-          else
-            gradle assembleDebug --stacktrace
+
+          # Ensure gradlew executable and wrapper are present
+          if [ ! -f "./gradlew" ]; then
+            if [ -f "../gradlew" ]; then
+              cp ../gradlew ./
+              cp -r ../gradle ./
+            else
+              echo "Creating Gradle 8.7 wrapper..."
+              gradle wrapper --gradle-version 8.7 --distribution-type bin
+            fi
           fi
+
+          chmod +x ./gradlew
+          ./gradlew --version
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
