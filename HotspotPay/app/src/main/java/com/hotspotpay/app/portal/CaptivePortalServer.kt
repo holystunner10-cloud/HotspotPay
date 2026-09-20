@@ -33,6 +33,10 @@ class CaptivePortalServer(
     private val onPaymentResult: (clientIp: String, success: Boolean, method: PaymentMethod) -> Unit
 ) : NanoHTTPD(port) {
 
+    companion object {
+        const val SOCKET_READ_TIMEOUT = 5000
+    }
+
     private val paymentRouter = PaymentRouter()
 
     override fun serve(session: IHTTPSession): Response {

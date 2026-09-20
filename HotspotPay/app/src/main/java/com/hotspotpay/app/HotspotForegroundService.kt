@@ -7,6 +7,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.hotspotpay.app.payment.PaymentMethod
 import com.hotspotpay.app.portal.CaptivePortalServer
+import fi.iki.elonen.NanoHTTPD
 
 /**
  * Keeps the LocalOnlyHotspot + local web server alive while the app is
@@ -59,7 +60,7 @@ class HotspotForegroundService : Service() {
                 )
             }
         )
-        server?.start(CaptivePortalServer.SOCKET_READ_TIMEOUT, false)
+        server?.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false)
     }
 
     private fun stopServer() {
