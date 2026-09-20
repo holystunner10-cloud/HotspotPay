@@ -1,0 +1,6 @@
+{
+  "name": "HotspotPay",
+  "description": "Android paid WiFi hotspot application with captive portal, local voucher management, and mobile payment gateways.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
